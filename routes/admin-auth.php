@@ -33,16 +33,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             return view('admin.dashboard');
         })->name('dashboard');
 
-        Route::get('verify-email', AdminEmailVerificationPromptController::class)->name('verification.notice');
-
-        Route::get('verify-email/{id}/{hash}', AdminVerifyEmailController::class)->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
-
         Route::post('email/verification-notification', [AdminEmailVerificationNotificationController::class, 'store'])->middleware('throttle:6,1')->name('verification.send');
-
-        Route::get('password', [AdminPasswordController::class, 'edit'])->name('password.edit');
-        Route::get('confirm-password', [AdminConfirmablePasswordController::class, 'show'])->name('password.confirm');
-
-        Route::post('confirm-password', [AdminConfirmablePasswordController::class, 'store']);
 
         Route::put('password', [AdminPasswordController::class, 'update'])->name('password.update');
 
